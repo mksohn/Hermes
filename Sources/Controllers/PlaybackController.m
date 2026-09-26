@@ -25,6 +25,24 @@ BOOL playOnStart = YES;
 - (void)_setAllPossibleLabelsToFit:(NSArray *)toolbarItemLabels;
 @end
 
+static NSImage *HermesToolbarImageNamed(NSString *name, NSSize size) {
+  NSImage *image = [[NSImage imageNamed:name] copy];
+  [image setSize:size];
+  return image;
+}
+
+static void HermesSetToolbarItemImage(NSToolbarItem *item, NSString *name, NSSize size) {
+  if (item == nil) {
+    return;
+  }
+
+  [item setImage:HermesToolbarImageNamed(name, size)];
+}
+
+@interface PlaybackController ()
+- (void)updateToolbarItemImages;
+@end
+
 @implementation PlaybackController
 
 @synthesize playing;
@@ -41,6 +59,9 @@ BOOL playOnStart = YES;
 
 - (void) awakeFromNib {
   NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+
+  [self updateToolbarItemImages];
+  toolbar.visible = YES;
 
   NSWindow *window = [HMSAppDelegate window];
   [center addObserver:self
@@ -166,6 +187,14 @@ BOOL playOnStart = YES;
 #endif
 }
 
+- (void)updateToolbarItemImages {
+  HermesSetToolbarItemImage(playpause, @"play", NSMakeSize(22, 22));
+  HermesSetToolbarItemImage(nextSong, @"fast_forward", NSMakeSize(22, 22));
+  HermesSetToolbarItemImage(like, @"thumbup", NSMakeSize(19, 22));
+  HermesSetToolbarItemImage(dislike, @"thumbdown", NSMakeSize(18, 22));
+  HermesSetToolbarItemImage(tiredOfSong, @"zzs", NSMakeSize(30, 22));
+}
+
 - (void)showToolbar {
   toolbar.visible = YES;
 }
@@ -279,12 +308,12 @@ BOOL playOnStart = YES;
 - (void)playbackStateChanged: (NSNotification *)aNotification {
   if ([playing isPlaying]) {
     NSLogd(@"Stream playing: %@", playing.playingSong);
-    [playpause setImage:[NSImage imageNamed:@"pause"]];
+    HermesSetToolbarItemImage(playpause, @"pause", NSMakeSize(22, 22));
     [playpause setLabel:@"Pause"];
     [self startUpdatingProgress];
   } else if ([playing isPaused]) {
     NSLogd(@"Stream paused.");
-    [playpause setImage:[NSImage imageNamed:@"play"]];
+    HermesSetToolbarItemImage(playpause, @"play", NSMakeSize(22, 22));
     [playpause setLabel:@"Play"];
     [self stopUpdatingProgress];
   }

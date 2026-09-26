@@ -30,6 +30,7 @@
 		97539FAD158442A500D1E65C /* URLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 97539FAC158442A500D1E65C /* URLConnection.m */; };
 		97E0DA35159EDF7C00BEA465 /* radio.png in Resources */ = {isa = PBXBuildFile; fileRef = 97E0DA34159EDF7C00BEA465 /* radio.png */; };
 		B2A26AEF1AE39E9B00ADD460 /* MusicProgressSliderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A26AEE1AE39E9B00ADD460 /* MusicProgressSliderCell.m */; };
+		BBF509B13067B1E600BC7B05 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = BBF509B03067B1E600BC7B05 /* README.txt */; };
 		E1200AA11CF2A4CC000D3215 /* LabelHoverShowField.m in Sources */ = {isa = PBXBuildFile; fileRef = E1200AA01CF2A4CC000D3215 /* LabelHoverShowField.m */; };
 		E1200AA41CF2B015000D3215 /* LabelHoverShowFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E1200AA31CF2B015000D3215 /* LabelHoverShowFieldCell.m */; };
 		E124109A18EBAF6F007AF091 /* HermesApp.m in Sources */ = {isa = PBXBuildFile; fileRef = E124109918EBAF6F007AF091 /* HermesApp.m */; };
@@ -156,6 +157,7 @@
 		97E0DA34159EDF7C00BEA465 /* radio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = radio.png; sourceTree = "<group>"; };
 		B2A26AED1AE39E9B00ADD460 /* MusicProgressSliderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MusicProgressSliderCell.h; path = Views/MusicProgressSliderCell.h; sourceTree = "<group>"; };
 		B2A26AEE1AE39E9B00ADD460 /* MusicProgressSliderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MusicProgressSliderCell.m; path = Views/MusicProgressSliderCell.m; sourceTree = "<group>"; };
+		BBF509B03067B1E600BC7B05 /* README.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.txt; sourceTree = SOURCE_ROOT; };
 		E1200A9F1CF2A4CC000D3215 /* LabelHoverShowField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LabelHoverShowField.h; path = Views/LabelHoverShowField.h; sourceTree = "<group>"; };
 		E1200AA01CF2A4CC000D3215 /* LabelHoverShowField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LabelHoverShowField.m; path = Views/LabelHoverShowField.m; sourceTree = "<group>"; };
 		E1200AA21CF2B015000D3215 /* LabelHoverShowFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LabelHoverShowFieldCell.h; path = Views/LabelHoverShowFieldCell.h; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
 				FAAB28CE1336FB0300FC04C4 /* pandora.icns */,
 				FA24435F136B3D6C00E126D3 /* README.md */,
+				BBF509B03067B1E600BC7B05 /* README.txt */,
 				E137BA0A2132E698002E513C /* RELEASING.md */,
 				FA0E555914784A3000C36794 /* Hermes.sdef */,
 				44310F8A18EB87AB0095359D /* Credits.rtf */,
@@ -644,6 +647,7 @@
 				97177194159EAA7D00EE3355 /* cd.png in Resources */,
 				E1C1EC131A1AE7E4001E4D8F /* Pandora-Menu-Dark-Pause.pdf in Resources */,
 				9717719A159EB0E200EE3355 /* music-note.png in Resources */,
+				BBF509B13067B1E600BC7B05 /* README.txt in Resources */,
 				97E0DA35159EDF7C00BEA465 /* radio.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -770,7 +774,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 25092603;
+				CURRENT_PROJECT_VERSION = 25092604;
 				DEVELOPMENT_TEAM = 879HHN8F33;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -810,7 +814,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 25092603;
+				CURRENT_PROJECT_VERSION = 25092604;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 879HHN8F33;
 				FRAMEWORK_SEARCH_PATHS = (

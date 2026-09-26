@@ -201,10 +201,6 @@
 
   [drawer open];
   [drawer setContentSize:s];
-  NSCollectionViewGridLayout *gridLayout = [[NSCollectionViewGridLayout alloc] init];
-  gridLayout.maximumItemSize = NSMakeSize(227, 41);
-  gridLayout.minimumItemSize = NSMakeSize(40, 41);
-  collection.collectionViewLayout = gridLayout;
   [self focus];
 }
 
@@ -249,4 +245,3 @@
 }
 
 @end
-

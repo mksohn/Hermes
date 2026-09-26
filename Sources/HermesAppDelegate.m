@@ -24,6 +24,12 @@
 #define DEBUG_MODE_TITLE_PREFIX @"🐞 "
 #define STATUS_BAR_MAX_WIDTH 200
 
+static NSImage *HermesDrawerToolbarImageNamed(NSString *name) {
+  NSImage *image = [[NSImage imageNamed:name] copy];
+  [image setSize:NSMakeSize(22, 22)];
+  return image;
+}
+
 @interface HermesAppDelegate ()
 
 @property (readonly) NSString *hermesLogFile;
@@ -257,6 +263,7 @@
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   [defaults registerDefaults:app_defaults];
   [self migrateDefaults:defaults];
+  [drawerToggle setImage:HermesDrawerToolbarImageNamed(@"history")];
   [playback prepareFirst];
 
   [self updateAlwaysOnTop:nil];
@@ -388,14 +395,14 @@
 
 - (void) historyShow {
   [history showDrawer];
-  [drawerToggle setImage:[NSImage imageNamed:@"radio"]];
+  [drawerToggle setImage:HermesDrawerToolbarImageNamed(@"radio")];
   [drawerToggle setToolTip: @"Show station list"];
   drawerToggle.paletteLabel = drawerToggle.label = @"Stations";
 }
 
 - (void) stationsShow {
   [stations showDrawer];
-  [drawerToggle setImage:[NSImage imageNamed:@"history"]];
+  [drawerToggle setImage:HermesDrawerToolbarImageNamed(@"history")];
   [drawerToggle setToolTip: @"Show song history"];
   drawerToggle.paletteLabel = drawerToggle.label = @"History";
 }
