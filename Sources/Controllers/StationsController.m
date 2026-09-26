@@ -173,8 +173,16 @@
       reader = [FileReader readerForFile:saved_state
                        completionHandler:^(NSData *data, NSError *err) {
         if (err == nil) {
-          Station *s = [NSKeyedUnarchiver unarchiveObjectWithFile:saved_state];
-          if ([last isEqual:s]) {
+          NSError *unarchiveError = nil;
+          NSKeyedUnarchiver *unarchiver =
+            [[NSKeyedUnarchiver alloc] initForReadingFromData:data
+                                                        error:&unarchiveError];
+          unarchiver.requiresSecureCoding = NO;
+          Station *s = [unarchiver decodeTopLevelObjectOfClass:[Station class]
+                                                        forKey:NSKeyedArchiveRootObjectKey
+                                                         error:&unarchiveError];
+          [unarchiver finishDecoding];
+          if ([s isKindOfClass:[Station class]] && [last isEqual:s]) {
             last = s;
             [last setRadio:[self pandora]];
           }
@@ -192,9 +200,9 @@
   return YES;
 }
 
-#pragma mark - NSDrawerDelegate
+#pragma mark - Drawer delegate
 
-- (NSSize) drawerWillResizeContents:(NSDrawer*) drawer toSize:(NSSize) size {
+- (NSSize) drawerWillResizeContents:(id)drawer toSize:(NSSize) size {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   [defaults setInteger:size.width forKey:DRAWER_WIDTH];
   return size;

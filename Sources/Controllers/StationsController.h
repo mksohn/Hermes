@@ -3,11 +3,22 @@
 @class FileReader;
 @class Station;
 
+#ifndef HERMES_DRAWER_PROTOCOL
+#define HERMES_DRAWER_PROTOCOL
+@protocol HermesDrawer <NSObject>
+@property (readonly) NSView *contentView;
+@property (readonly) NSWindow *parentWindow;
+- (void)open;
+- (void)close;
+- (void)setContentSize:(NSSize)size;
+@end
+#endif
+
 @interface StationsController : NSObject <NSTableViewDataSource, NSOutlineViewDataSource> {
 
   IBOutlet NSView *chooseStationView;
 
-  IBOutlet NSDrawer *stations;
+  IBOutlet id<HermesDrawer> stations;
   IBOutlet NSTableView *stationsTable;
   IBOutlet NSProgressIndicator *stationsRefreshing;
 

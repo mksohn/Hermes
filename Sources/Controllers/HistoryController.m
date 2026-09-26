@@ -33,7 +33,12 @@
     if (err) return;
     assert(data != nil);
 
-    NSArray *s = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    NSError *unarchiveError = nil;
+    NSSet *allowedClasses = [NSSet setWithObjects:[NSArray class], [Song class], nil];
+    NSArray *s = [NSKeyedUnarchiver unarchivedObjectOfClasses:allowedClasses fromData:data error:&unarchiveError];
+    if (unarchiveError) {
+      NSLog(@"Failed to unarchive history: %@", unarchiveError);
+    }
     for (Song *song in s) {
       if ([self->songs indexOfObject:song] == NSNotFound)
         [self->controller addObject:song];
@@ -76,7 +81,24 @@
     return NO;
   }
 
-  return [NSKeyedArchiver archiveRootObject:songs toFile:path];
+  NSError *archiveError = nil;
+  NSData *data = [NSKeyedArchiver archivedDataWithRootObject:songs requiringSecureCoding:NO error:&archiveError];
+  if (archiveError || data == nil) {
+    if (archiveError) {
+      NSLog(@"Failed to archive history: %@", archiveError);
+    }
+    return NO;
+  }
+
+  NSURL *url = [NSURL fileURLWithPath:path];
+  NSError *writeError = nil;
+  BOOL success = [data writeToURL:url options:NSDataWritingAtomic error:&writeError];
+  if (!success) {
+    if (writeError) {
+      NSLog(@"Failed to write history to disk: %@", writeError);
+    }
+  }
+  return success;
 }
 
 - (Song*) selectedItem {
@@ -115,16 +137,16 @@
   }
 
   if (rating == -1) {
-    [like setState:NSOffState];
-    [dislike setState:NSOnState];
+    [like setState:NSControlStateValueOff];
+    [dislike setState:NSControlStateValueOn];
   }
   else if (rating == 0) {
-    [like setState:NSOffState];
-    [dislike setState:NSOffState];
+    [like setState:NSControlStateValueOff];
+    [dislike setState:NSControlStateValueOff];
   }
   else if (rating == 1) {
-    [like setState:NSOnState];
-    [dislike setState:NSOffState];
+    [like setState:NSControlStateValueOn];
+    [dislike setState:NSControlStateValueOff];
   }
 }
 
@@ -161,7 +183,7 @@
   [[NSWorkspace sharedWorkspace] openURL:url];
 }
 
-- (NSSize) drawerWillResizeContents:(NSDrawer*) drawer toSize:(NSSize) size {
+- (NSSize) drawerWillResizeContents:(id)drawer toSize:(NSSize) size {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   [defaults setInteger:size.width forKey:HIST_DRAWER_WIDTH];
   return size;
@@ -179,8 +201,10 @@
 
   [drawer open];
   [drawer setContentSize:s];
-  [collection setMaxItemSize:NSMakeSize(227, 41)];
-  [collection setMinItemSize:NSMakeSize(40, 41)];
+  NSCollectionViewGridLayout *gridLayout = [[NSCollectionViewGridLayout alloc] init];
+  gridLayout.maximumItemSize = NSMakeSize(227, 41);
+  gridLayout.minimumItemSize = NSMakeSize(40, 41);
+  collection.collectionViewLayout = gridLayout;
   [self focus];
 }
 
@@ -225,3 +249,4 @@
 }
 
 @end
+

@@ -25,6 +25,13 @@ BOOL playOnStart = YES;
 - (void)_setAllPossibleLabelsToFit:(NSArray *)toolbarItemLabels;
 @end
 
+static NSString * const HMSPlaybackToolbarItemPlayPause = @"93E09D6C-9E59-4A3C-A062-D1300904AE9D";
+static NSString * const HMSPlaybackToolbarItemNext = @"C1F73AAE-CA9B-4AE4-84F0-6FD469CA5403";
+static NSString * const HMSPlaybackToolbarItemDrawer = @"63378708-9425-4BEA-BDC4-0A119EA2829F";
+static NSString * const HMSPlaybackToolbarItemLike = @"like";
+static NSString * const HMSPlaybackToolbarItemDislike = @"2C8D8643-12E0-4455-B548-CE63FB4051DD";
+static NSString * const HMSPlaybackToolbarItemTired = @"ACC84F8C-7985-4757-9D76-09A92CE90D5D";
+
 @implementation PlaybackController
 
 @synthesize playing;
@@ -40,6 +47,8 @@ BOOL playOnStart = YES;
 }
 
 - (void) awakeFromNib {
+  [self configureToolbar];
+
   NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 
   NSWindow *window = [HMSAppDelegate window];
@@ -166,6 +175,134 @@ BOOL playOnStart = YES;
 #endif
 }
 
+- (void)configureToolbar {
+  [toolbar setDelegate:self];
+
+  if ([[toolbar items] count] == 0) {
+    for (NSString *identifier in [self toolbarDefaultItemIdentifiers:toolbar]) {
+      [toolbar insertItemWithItemIdentifier:identifier atIndex:[[toolbar items] count]];
+    }
+  }
+}
+
+- (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)aToolbar {
+  return @[
+    HMSPlaybackToolbarItemPlayPause,
+    HMSPlaybackToolbarItemNext,
+    HMSPlaybackToolbarItemDrawer,
+    HMSPlaybackToolbarItemLike,
+    HMSPlaybackToolbarItemDislike,
+    HMSPlaybackToolbarItemTired,
+    NSToolbarFlexibleSpaceItemIdentifier,
+    NSToolbarSpaceItemIdentifier
+  ];
+}
+
+- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)aToolbar {
+  return @[
+    HMSPlaybackToolbarItemPlayPause,
+    HMSPlaybackToolbarItemNext,
+    HMSPlaybackToolbarItemDrawer,
+    NSToolbarFlexibleSpaceItemIdentifier,
+    HMSPlaybackToolbarItemLike,
+    HMSPlaybackToolbarItemDislike
+  ];
+}
+
+- (NSArray *)toolbarSelectableItemIdentifiers:(NSToolbar *)aToolbar {
+  return @[HMSPlaybackToolbarItemLike];
+}
+
+- (NSToolbarItem *)toolbar:(NSToolbar *)aToolbar
+     itemForItemIdentifier:(NSString *)identifier
+ willBeInsertedIntoToolbar:(BOOL)willBeInserted {
+  if ([identifier isEqualToString:HMSPlaybackToolbarItemPlayPause]) {
+    playpause = [self toolbarItemWithIdentifier:identifier
+                                          label:@"Play"
+                                   paletteLabel:@"Play/Pause"
+                                        toolTip:@"Play/pause the current song"
+                                          image:@"play"
+                                         target:self
+                                         action:@selector(playpause:)];
+    return playpause;
+  }
+
+  if ([identifier isEqualToString:HMSPlaybackToolbarItemNext]) {
+    nextSong = [self toolbarItemWithIdentifier:identifier
+                                         label:@"Next Song"
+                                  paletteLabel:@"Next Song"
+                                       toolTip:@"Skip current song"
+                                         image:@"fast_forward"
+                                        target:self
+                                        action:@selector(next:)];
+    return nextSong;
+  }
+
+  if ([identifier isEqualToString:HMSPlaybackToolbarItemDrawer]) {
+    NSToolbarItem *item = [self toolbarItemWithIdentifier:identifier
+                                                    label:@"History"
+                                             paletteLabel:@"History/Stations"
+                                                  toolTip:@"Show playback history"
+                                                    image:@"history"
+                                                   target:HMSAppDelegate
+                                                   action:@selector(toggleDrawerContent:)];
+    [HMSAppDelegate setDrawerToggleToolbarItem:item];
+    return item;
+  }
+
+  if ([identifier isEqualToString:HMSPlaybackToolbarItemLike]) {
+    like = [self toolbarItemWithIdentifier:identifier
+                                     label:@"Like"
+                              paletteLabel:@"Like"
+                                   toolTip:@"Like current song"
+                                     image:@"thumbup"
+                                    target:self
+                                    action:@selector(like:)];
+    return like;
+  }
+
+  if ([identifier isEqualToString:HMSPlaybackToolbarItemDislike]) {
+    dislike = [self toolbarItemWithIdentifier:identifier
+                                        label:@"Dislike"
+                                 paletteLabel:@"Dislike"
+                                      toolTip:@"Dislike current song"
+                                        image:@"thumbdown"
+                                       target:self
+                                       action:@selector(dislike:)];
+    return dislike;
+  }
+
+  if ([identifier isEqualToString:HMSPlaybackToolbarItemTired]) {
+    tiredOfSong = [self toolbarItemWithIdentifier:identifier
+                                            label:@"Tired"
+                                     paletteLabel:@"Tired"
+                                          toolTip:@"Don't play current song for a month"
+                                            image:@"zzs"
+                                           target:self
+                                           action:@selector(tired:)];
+    return tiredOfSong;
+  }
+
+  return nil;
+}
+
+- (NSToolbarItem *)toolbarItemWithIdentifier:(NSString *)identifier
+                                       label:(NSString *)label
+                                paletteLabel:(NSString *)paletteLabel
+                                     toolTip:(NSString *)toolTip
+                                       image:(NSString *)imageName
+                                      target:(id)target
+                                      action:(SEL)action {
+  NSToolbarItem *item = [[NSToolbarItem alloc] initWithItemIdentifier:identifier];
+  [item setLabel:label];
+  [item setPaletteLabel:paletteLabel];
+  [item setToolTip:toolTip];
+  [item setImage:[NSImage imageNamed:imageName]];
+  [item setTarget:target];
+  [item setAction:action];
+  return item;
+}
+
 - (void)showToolbar {
   toolbar.visible = YES;
 }
@@ -256,7 +393,23 @@ BOOL playOnStart = YES;
     return NO;
   }
 
-  return [NSKeyedArchiver archiveRootObject:[self playing] toFile:path];
+  // Use modern secure-coding archiving API
+  NSError *archiveError = nil;
+  NSData *data = [NSKeyedArchiver archivedDataWithRootObject:[self playing]
+                                      requiringSecureCoding:NO
+                                                      error:&archiveError];
+  if (data == nil || archiveError != nil) {
+    NSLog(@"Failed to archive playing station: %@", archiveError);
+    return NO;
+  }
+
+  NSURL *url = [NSURL fileURLWithPath:path];
+  NSError *writeError = nil;
+  BOOL success = [data writeToURL:url options:NSDataWritingAtomic error:&writeError];
+  if (!success) {
+    NSLog(@"Failed to write archived station to disk: %@", writeError);
+  }
+  return success;
 }
 
 /* Called whenever the playing stream changes state */
@@ -667,13 +820,13 @@ BOOL playOnStart = YES;
     if (song && ![playing shared]) {
       NSInteger rating = [[song nrating] integerValue];
       if (action == @selector(like:)) {
-        [menuItem setState:rating == 1 ? NSOnState : NSOffState];
+        [menuItem setState:rating == 1 ? NSControlStateValueOn : NSControlStateValueOff];
       } else {
-        [menuItem setState:rating == -1 ? NSOnState : NSOffState];
+        [menuItem setState:rating == -1 ? NSControlStateValueOn : NSControlStateValueOff];
       }
       return YES;
     } else {
-      [menuItem setState:NSOffState];
+      [menuItem setState:NSControlStateValueOff];
       return NO;
     }
   }
@@ -748,3 +901,4 @@ BOOL playOnStart = YES;
 }
 
 @end
+

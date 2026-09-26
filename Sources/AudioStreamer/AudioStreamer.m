@@ -25,6 +25,7 @@
    Alex Crichton for the Hermes project */
 
 #import "AudioStreamer.h"
+#import <CFNetwork/CFNetwork.h>
 
 #define BitRateEstimationMinPackets 50
 
@@ -108,6 +109,15 @@ static void MyPacketsProc(void *inClientData, UInt32 inNumberBytes, UInt32
                    numberBytes:inNumberBytes
                  numberPackets:inNumberPackets
             packetDescriptions:inPacketDescriptions];
+}
+
+static CFHTTPMessageRef CopyHTTPResponseHeaderForReadStream(CFReadStreamRef readStream) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  CFTypeRef message =
+      CFReadStreamCopyProperty(readStream, kCFStreamPropertyHTTPResponseHeader);
+#pragma clang diagnostic pop
+  return (CFHTTPMessageRef)message;
 }
 
 /* AudioQueue callback notifying that a buffer is done, invoked on AudioQueue's
@@ -623,13 +633,23 @@ static void ASReadStreamCallBack(CFReadStreamRef aStream, CFStreamEventType even
     seekByteOffset = 0;
   }
 
+  /* AudioStreamer relies on CFReadStream scheduling for buffer backpressure;
+     keep this legacy HTTP stream creation isolated while the pipeline remains
+     CFReadStream-based. */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   stream = CFReadStreamCreateForHTTPRequest(NULL, message);
+#pragma clang diagnostic pop
   CFRelease(message);
 
   /* Follow redirection codes by default */
-  if (!CFReadStreamSetProperty(stream,
-                               kCFStreamPropertyHTTPShouldAutoredirect,
-                               kCFBooleanTrue)) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  Boolean didSetAutoredirect = CFReadStreamSetProperty(stream,
+                                                       kCFStreamPropertyHTTPShouldAutoredirect,
+                                                       kCFBooleanTrue);
+#pragma clang diagnostic pop
+  if (!didSetAutoredirect) {
     [self failWithErrorCode:AS_FILE_STREAM_GET_PROPERTY_FAILED];
     return NO;
   }
@@ -637,30 +657,104 @@ static void ASReadStreamCallBack(CFReadStreamRef aStream, CFStreamEventType even
   /* Deal with proxies */
   switch (proxyType) {
     case PROXY_HTTP: {
-      CFDictionaryRef proxySettings = (__bridge CFDictionaryRef)
-        [NSMutableDictionary dictionaryWithObjectsAndKeys:
-          proxyHost, kCFStreamPropertyHTTPProxyHost,
-          @(proxyPort), kCFStreamPropertyHTTPProxyPort,
-          nil];
-      CFReadStreamSetProperty(stream, kCFStreamPropertyHTTPProxy,
-                              proxySettings);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+      NSNumber *proxyPortNumber = @(proxyPort);
+      CFReadStreamSetProperty(stream,
+                              kCFStreamPropertyHTTPProxyHost,
+                              (__bridge CFStringRef)proxyHost);
+      CFReadStreamSetProperty(stream,
+                              kCFStreamPropertyHTTPProxyPort,
+                              (__bridge CFNumberRef)proxyPortNumber);
+      CFReadStreamSetProperty(stream,
+                              kCFStreamPropertyHTTPSProxyHost,
+                              (__bridge CFStringRef)proxyHost);
+      CFReadStreamSetProperty(stream,
+                              kCFStreamPropertyHTTPSProxyPort,
+                              (__bridge CFNumberRef)proxyPortNumber);
+#pragma clang diagnostic pop
       break;
     }
     case PROXY_SOCKS: {
-      CFDictionaryRef proxySettings = (__bridge CFDictionaryRef)
-        [NSMutableDictionary dictionaryWithObjectsAndKeys:
-          proxyHost, kCFStreamPropertySOCKSProxyHost,
-          @(proxyPort), kCFStreamPropertySOCKSProxyPort,
-          nil];
-      CFReadStreamSetProperty(stream, kCFStreamPropertySOCKSProxy,
-                              proxySettings);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+      NSNumber *proxyPortNumber = @(proxyPort);
+      CFReadStreamSetProperty(stream,
+                              kCFStreamPropertySOCKSProxyHost,
+                              (__bridge CFStringRef)proxyHost);
+      CFReadStreamSetProperty(stream,
+                              kCFStreamPropertySOCKSProxyPort,
+                              (__bridge CFNumberRef)proxyPortNumber);
+#pragma clang diagnostic pop
       break;
     }
     default:
     case PROXY_SYSTEM: {
       CFDictionaryRef proxySettings = CFNetworkCopySystemProxySettings();
-      CFReadStreamSetProperty(stream, kCFStreamPropertyHTTPProxy, proxySettings);
+      if (proxySettings == NULL) {
+        break;
+      }
+
+      CFArrayRef proxies = CFNetworkCopyProxiesForURL((__bridge CFURLRef)url,
+                                                      proxySettings);
       CFRelease(proxySettings);
+      if (proxies == NULL) {
+        break;
+      }
+
+      CFIndex proxyCount = CFArrayGetCount(proxies);
+      for (CFIndex i = 0; i < proxyCount; i++) {
+        CFDictionaryRef proxy = CFArrayGetValueAtIndex(proxies, i);
+        CFStringRef type = CFDictionaryGetValue(proxy, kCFProxyTypeKey);
+
+        if (type == NULL || CFEqual(type, kCFProxyTypeNone)) {
+          break;
+        }
+
+        CFStringRef proxyHostName = CFDictionaryGetValue(proxy,
+                                                         kCFProxyHostNameKey);
+        CFNumberRef proxyPortNumber = CFDictionaryGetValue(proxy,
+                                                           kCFProxyPortNumberKey);
+        if (proxyHostName == NULL || proxyPortNumber == NULL) {
+          continue;
+        }
+
+        if (CFEqual(type, kCFProxyTypeHTTP)) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+          CFReadStreamSetProperty(stream,
+                                  kCFStreamPropertyHTTPProxyHost,
+                                  proxyHostName);
+          CFReadStreamSetProperty(stream,
+                                  kCFStreamPropertyHTTPProxyPort,
+                                  proxyPortNumber);
+#pragma clang diagnostic pop
+          break;
+        } else if (CFEqual(type, kCFProxyTypeHTTPS)) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+          CFReadStreamSetProperty(stream,
+                                  kCFStreamPropertyHTTPSProxyHost,
+                                  proxyHostName);
+          CFReadStreamSetProperty(stream,
+                                  kCFStreamPropertyHTTPSProxyPort,
+                                  proxyPortNumber);
+#pragma clang diagnostic pop
+          break;
+        } else if (CFEqual(type, kCFProxyTypeSOCKS)) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+          CFReadStreamSetProperty(stream,
+                                  kCFStreamPropertySOCKSProxyHost,
+                                  proxyHostName);
+          CFReadStreamSetProperty(stream,
+                                  kCFStreamPropertySOCKSProxyPort,
+                                  proxyPortNumber);
+#pragma clang diagnostic pop
+          break;
+        }
+      }
+      CFRelease(proxies);
       break;
     }
   }
@@ -749,10 +843,9 @@ static void ASReadStreamCallBack(CFReadStreamRef aStream, CFStreamEventType even
 
   /* Read off the HTTP headers into our own class if we haven't done so */
   if (!httpHeaders) {
-    CFTypeRef message =
-        CFReadStreamCopyProperty(stream, kCFStreamPropertyHTTPResponseHeader);
+    CFHTTPMessageRef message = CopyHTTPResponseHeaderForReadStream(stream);
     httpHeaders = (__bridge_transfer NSDictionary *)
-        CFHTTPMessageCopyAllHeaderFields((CFHTTPMessageRef) message);
+        CFHTTPMessageCopyAllHeaderFields(message);
     CFRelease(message);
 
     //
@@ -1333,3 +1426,4 @@ static void ASReadStreamCallBack(CFReadStreamRef aStream, CFStreamEventType even
 }
 
 @end
+

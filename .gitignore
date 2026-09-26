@@ -6,3 +6,4 @@ build
 *.xcodeproj/xcuserdata
 *.xcodeproj/*.xcworkspace
 Hermes.dmg
+.derived-data-log-*

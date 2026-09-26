@@ -3,14 +3,13 @@
 //  Hermes
 //
 
-#import <Growl/GrowlApplicationBridge.h>
+#import <Cocoa/Cocoa.h>
 
 @class Song;
 
 #define GROWLER [HMSAppDelegate growler]
 
-@interface Growler : NSObject<GrowlApplicationBridgeDelegate,
-                              NSUserNotificationCenterDelegate>
+@interface Growler : NSObject<NSUserNotificationCenterDelegate>
 
 - (void) growl:(Song*)song withImage:(NSData*)image isNew:(BOOL) n;
 

@@ -8,6 +8,17 @@
 @class FileReader;
 @class Song;
 
+#ifndef HERMES_DRAWER_PROTOCOL
+#define HERMES_DRAWER_PROTOCOL
+@protocol HermesDrawer <NSObject>
+@property (readonly) NSView *contentView;
+@property (readonly) NSWindow *parentWindow;
+- (void)open;
+- (void)close;
+- (void)setContentSize:(NSSize)size;
+@end
+#endif
+
 @interface HistoryController : NSObject {
   IBOutlet NSCollectionView *collection;
   FileReader *reader;
@@ -18,7 +29,7 @@
   IBOutlet NSButton *lyrics;
   IBOutlet NSButton *like;
   IBOutlet NSButton *dislike;
-  IBOutlet NSDrawer *drawer;
+  IBOutlet id<HermesDrawer> drawer;
   IBOutlet NSProgressIndicator *spinner;
 }
 

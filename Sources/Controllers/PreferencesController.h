@@ -64,7 +64,7 @@
 #define GROWL_TYPE_GROWL 0
 #define GROWL_TYPE_OSX   1
 
-@interface PreferencesController : NSObject <NSWindowDelegate> {
+@interface PreferencesController : NSObject <NSToolbarDelegate, NSWindowDelegate> {
   IBOutlet NSWindow *window;
   IBOutlet NSToolbar *toolbar;
   IBOutlet NSView *general;

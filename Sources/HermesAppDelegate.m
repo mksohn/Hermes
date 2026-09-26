@@ -86,7 +86,7 @@
                       keyEquivalent:@""];
   [menuItem setTarget:playback];
   if ([[song nrating] intValue] == 1) {
-    menuItem.state = NSOnState;
+    menuItem.state = NSControlStateValueOn;
   }
   menuItem = [menu addItemWithTitle:@"Dislike"
                              action:@selector(dislike:)
@@ -187,8 +187,8 @@
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-  NSUInteger flags = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
-  BOOL isOptionPressed = (flags == NSAlternateKeyMask);
+  NSEventModifierFlags flags = ([NSEvent modifierFlags] & NSEventModifierFlagDeviceIndependentFlagsMask);
+  BOOL isOptionPressed = (flags & NSEventModifierFlagOption) == NSEventModifierFlagOption;
   
   if (isOptionPressed && [self configureLogFile]) {
     _debugMode = YES;
@@ -281,12 +281,11 @@
 
 #pragma mark - NSWindowRestoration
 
-+ (BOOL)restoreWindowWithIdentifier:(NSString *)identifier
++ (void)restoreWindowWithIdentifier:(NSString *)identifier
                               state:(NSCoder *)state
                   completionHandler:(void (^)(NSWindow *, NSError *))done {
   [PlaybackController setPlayOnStart:NO];
   done(nil, nil);
-  return YES;
 }
 
 #pragma mark -
@@ -386,6 +385,10 @@
 }
 
 #pragma mark - Drawer management
+
+- (void) setDrawerToggleToolbarItem:(NSToolbarItem *) toolbarItem {
+  drawerToggle = toolbarItem;
+}
 
 - (void) historyShow {
   [history showDrawer];
@@ -559,7 +562,7 @@
     [overlay drawInRect:NSMakeRect(playPauseOffset, playPauseOffset,
                                    [overlay size].width, [overlay size].height)
                fromRect:NSZeroRect
-              operation:NSCompositeSourceOver
+              operation:NSCompositingOperationSourceOver
                fraction:1.0];
     [icon unlockFocus];
   }
@@ -803,18 +806,18 @@
     if (!self.pandora.isAuthenticated)
       return NO;
 
+    NSControlStateValue state = NSControlStateValueOff;
     NSInteger openDrawer = [PREF_KEY_VALUE(OPEN_DRAWER) integerValue];
-    NSCellStateValue state = NSOffState;
     if (action == @selector(showHistoryDrawer:)) {
       if (openDrawer == DRAWER_NONE_HIST)
-        state = NSMixedState;
+        state = NSControlStateValueMixed;
       else if (openDrawer == DRAWER_HISTORY)
-        state = NSOnState;
+        state = NSControlStateValueOn;
     } else if (action == @selector(showStationsDrawer:)) {
       if (openDrawer == DRAWER_NONE_STA)
-        state = NSMixedState;
+        state = NSControlStateValueMixed;
       else if (openDrawer == DRAWER_STATIONS)
-        state = NSOnState;
+        state = NSControlStateValueOn;
     } else {
       if (openDrawer == DRAWER_HISTORY || openDrawer == DRAWER_STATIONS)
         [menuItem setTitle:@"Hide Drawer"];
@@ -906,3 +909,4 @@
 }
 
 @end
+
