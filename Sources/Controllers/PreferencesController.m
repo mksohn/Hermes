@@ -4,97 +4,12 @@
 #import "PreferencesController.h"
 #import "URLConnection.h"
 
-static NSString * const HMSPreferencesToolbarItemGeneral = @"general";
-static NSString * const HMSPreferencesToolbarItemPlayback = @"playback";
-static NSString * const HMSPreferencesToolbarItemNetwork = @"network";
-
 @implementation PreferencesController
 
 - (void)awakeFromNib {
   [super awakeFromNib];
 
-  [self configureToolbar];
-
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(proxyServerValidityChanged:) name:URLConnectionProxyValidityChangedNotification object:nil];
-}
-
-- (void)configureToolbar {
-  [toolbar setDelegate:self];
-
-  if ([[toolbar items] count] == 0) {
-    for (NSString *identifier in [self toolbarDefaultItemIdentifiers:toolbar]) {
-      [toolbar insertItemWithItemIdentifier:identifier atIndex:[[toolbar items] count]];
-    }
-  }
-}
-
-- (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)aToolbar {
-  return @[
-    HMSPreferencesToolbarItemGeneral,
-    HMSPreferencesToolbarItemPlayback,
-    HMSPreferencesToolbarItemNetwork
-  ];
-}
-
-- (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)aToolbar {
-  return @[
-    HMSPreferencesToolbarItemGeneral,
-    HMSPreferencesToolbarItemPlayback,
-    HMSPreferencesToolbarItemNetwork
-  ];
-}
-
-- (NSArray *)toolbarSelectableItemIdentifiers:(NSToolbar *)aToolbar {
-  return [self toolbarDefaultItemIdentifiers:aToolbar];
-}
-
-- (NSToolbarItem *)toolbar:(NSToolbar *)aToolbar
-     itemForItemIdentifier:(NSString *)identifier
- willBeInsertedIntoToolbar:(BOOL)willBeInserted {
-  if ([identifier isEqualToString:HMSPreferencesToolbarItemGeneral]) {
-    return [self toolbarItemWithIdentifier:identifier
-                                     label:@"General"
-                              paletteLabel:@"General"
-                                   toolTip:@"General Settings"
-                                     image:@"NSPreferencesGeneral"
-                                    action:@selector(showGeneral:)];
-  }
-
-  if ([identifier isEqualToString:HMSPreferencesToolbarItemPlayback]) {
-    return [self toolbarItemWithIdentifier:identifier
-                                     label:@"Playback"
-                              paletteLabel:@"Playback"
-                                   toolTip:@"Playback Settings"
-                                     image:@"play"
-                                    action:@selector(showPlayback:)];
-  }
-
-  if ([identifier isEqualToString:HMSPreferencesToolbarItemNetwork]) {
-    return [self toolbarItemWithIdentifier:identifier
-                                     label:@"Network"
-                              paletteLabel:@"Network"
-                                   toolTip:@"Network Settings"
-                                     image:@"NSNetwork"
-                                    action:@selector(showNetwork:)];
-  }
-
-  return nil;
-}
-
-- (NSToolbarItem *)toolbarItemWithIdentifier:(NSString *)identifier
-                                       label:(NSString *)label
-                                paletteLabel:(NSString *)paletteLabel
-                                     toolTip:(NSString *)toolTip
-                                       image:(NSString *)imageName
-                                      action:(SEL)action {
-  NSToolbarItem *item = [[NSToolbarItem alloc] initWithItemIdentifier:identifier];
-  [item setLabel:label];
-  [item setPaletteLabel:paletteLabel];
-  [item setToolTip:toolTip];
-  [item setImage:[NSImage imageNamed:imageName]];
-  [item setTarget:self];
-  [item setAction:action];
-  return item;
 }
 
 - (void)windowDidBecomeMain:(NSNotification *)notification {
@@ -263,4 +178,3 @@ static NSString * const HMSPreferencesToolbarItemNetwork = @"network";
 }
 
 @end
-

@@ -68,7 +68,6 @@
 - (NSString*) getSavedPassword;
 - (NSImage*) buildPlayPauseAlbumArtImage:(NSSize)size;
 
-- (void) setDrawerToggleToolbarItem:(NSToolbarItem *) toolbarItem;
 - (void) tryRetry;
 - (void) handleDrawer;
 

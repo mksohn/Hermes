@@ -322,8 +322,60 @@ MgA3AEkATABRAFMAXQBjAGwAcwB4AIAAlQCXAJkAmwCdAKcArACxALwAvwDBAMMAxQDKANUA3gDmAOkA
                 </animations>
             </view>
             <toolbar key="toolbar" implicitIdentifier="523691DA-3184-4F47-A885-9465F8ED1820" showsBaselineSeparator="NO" prefersToBeShown="NO" displayMode="iconOnly" sizeMode="regular" id="768">
-                <nil name="allowedToolbarItems"/>
-                <nil name="defaultToolbarItems"/>
+                <allowedToolbarItems>
+                    <toolbarItem implicitItemIdentifier="93E09D6C-9E59-4A3C-A062-D1300904AE9D" label="Play" paletteLabel="Play/Pause" toolTip="Play/pause the current song" tag="-1" image="play" id="776">
+                        <size key="minSize" width="22" height="22"/>
+                        <size key="maxSize" width="22" height="22"/>
+                        <connections>
+                            <action selector="playpause:" target="835" id="854"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="C1F73AAE-CA9B-4AE4-84F0-6FD469CA5403" label="Next Song" paletteLabel="Next Song" toolTip="Skip current song" tag="-1" image="fast_forward" id="777">
+                        <size key="minSize" width="22" height="22"/>
+                        <size key="maxSize" width="22" height="22"/>
+                        <connections>
+                            <action selector="next:" target="835" id="853"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="63378708-9425-4BEA-BDC4-0A119EA2829F" label="History" paletteLabel="History/Stations" toolTip="Show playback history" tag="-1" image="history" id="1328">
+                        <size key="minSize" width="22" height="22"/>
+                        <size key="maxSize" width="22" height="22"/>
+                        <connections>
+                            <action selector="toggleDrawerContent:" target="494" id="2226"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="A449647C-5E3D-4B0A-A7A9-25D95931BEAA" explicitItemIdentifier="like" label="Like" paletteLabel="Like" toolTip="Like current song" tag="-1" image="thumbup" selectable="YES" id="818">
+                        <size key="minSize" width="19" height="22"/>
+                        <size key="maxSize" width="19" height="22"/>
+                        <connections>
+                            <action selector="like:" target="835" id="852"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="2C8D8643-12E0-4455-B548-CE63FB4051DD" label="Dislike" paletteLabel="Dislike" toolTip="Dislike current song" tag="-1" image="thumbdown" id="819">
+                        <size key="minSize" width="18" height="22"/>
+                        <size key="maxSize" width="18" height="22"/>
+                        <connections>
+                            <action selector="dislike:" target="835" id="851"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="ACC84F8C-7985-4757-9D76-09A92CE90D5D" label="Tired" paletteLabel="Tired" toolTip="Don't play current song for a month" tag="-1" image="zzs" id="820">
+                        <size key="minSize" width="30" height="22"/>
+                        <size key="maxSize" width="30" height="22"/>
+                        <connections>
+                            <action selector="tired:" target="835" id="850"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="774"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="773"/>
+                </allowedToolbarItems>
+                <defaultToolbarItems>
+                    <toolbarItem reference="776"/>
+                    <toolbarItem reference="777"/>
+                    <toolbarItem reference="1328"/>
+                    <toolbarItem reference="774"/>
+                    <toolbarItem reference="818"/>
+                    <toolbarItem reference="819"/>
+                </defaultToolbarItems>
             </toolbar>
             <userDefinedRuntimeAttributes>
                 <userDefinedRuntimeAttribute type="boolean" keyPath="movableByWindowBackground" value="YES"/>
@@ -405,7 +457,7 @@ DQ
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <clipView key="contentView" id="Qxl-WA-Sas">
                         <rect key="frame" x="1" y="1" width="301" height="246"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="734" customClass="StationsTableView">
                                 <rect key="frame" x="0.0" y="0.0" width="301" height="246"/>
@@ -424,7 +476,7 @@ DQ
                                         </imageCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                     </tableColumn>
-                                    <tableColumn editable="NO" width="271" minWidth="10" maxWidth="1000" id="947">
+                                    <tableColumn editable="NO" width="242" minWidth="10" maxWidth="1000" id="947">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Stations">
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -482,7 +534,7 @@ DQ
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <clipView key="contentView" id="5Gd-m0-JbG">
                         <rect key="frame" x="1" y="1" width="295" height="255"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <collectionView maxNumberOfRows="26" maxNumberOfColumns="1" selectable="YES" id="2161" customClass="HistoryCollectionView">
                                 <rect key="frame" x="0.0" y="0.0" width="295" height="255"/>
@@ -640,7 +692,7 @@ DQ
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                         <tableColumns>
-                                                            <tableColumn editable="NO" width="416" minWidth="16" maxWidth="1000" id="915">
+                                                            <tableColumn editable="NO" width="387" minWidth="16" maxWidth="1000" id="915">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -752,7 +804,7 @@ Gw
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                         <tableColumns>
-                                                            <tableColumn editable="NO" width="416" minWidth="16" maxWidth="1000" id="2250">
+                                                            <tableColumn editable="NO" width="387" minWidth="16" maxWidth="1000" id="2250">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -816,8 +868,34 @@ Gw
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             </view>
             <toolbar key="toolbar" implicitIdentifier="15389171-D844-4B76-858A-C99C8D9DDD31" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="iconAndLabel" sizeMode="regular" id="1535">
-                <nil name="allowedToolbarItems"/>
-                <nil name="defaultToolbarItems"/>
+                <allowedToolbarItems>
+                    <toolbarItem implicitItemIdentifier="8DA56A69-84EC-4744-ADD5-4591390ABFFD" explicitItemIdentifier="general" label="General" paletteLabel="General" toolTip="General Settings" tag="-1" image="NSPreferencesGeneral" selectable="YES" id="1543">
+                        <size key="minSize" width="22" height="22"/>
+                        <size key="maxSize" width="22" height="22"/>
+                        <connections>
+                            <action selector="showGeneral:" target="1114" id="1613"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="B74C6DCB-FB79-41D0-BFDA-03352C376D63" explicitItemIdentifier="playback" label="Playback" paletteLabel="Playback" toolTip="Playback Settings" tag="-1" image="play" selectable="YES" id="1609">
+                        <size key="minSize" width="22" height="22"/>
+                        <size key="maxSize" width="22" height="22"/>
+                        <connections>
+                            <action selector="showPlayback:" target="1114" id="1614"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="9EAA8F72-691E-4EA2-BD77-0CB194B01159" explicitItemIdentifier="network" label="Network" paletteLabel="Network" toolTip="Network Settings" tag="-1" image="NSNetwork" selectable="YES" id="1886">
+                        <size key="minSize" width="22" height="22"/>
+                        <size key="maxSize" width="22" height="22"/>
+                        <connections>
+                            <action selector="showNetwork:" target="1114" id="2052"/>
+                        </connections>
+                    </toolbarItem>
+                </allowedToolbarItems>
+                <defaultToolbarItems>
+                    <toolbarItem reference="1543"/>
+                    <toolbarItem reference="1609"/>
+                    <toolbarItem reference="1886"/>
+                </defaultToolbarItems>
             </toolbar>
             <connections>
                 <outlet property="delegate" destination="1114" id="1134"/>
@@ -829,6 +907,7 @@ Gw
                 <outlet property="auth" destination="659" id="669"/>
                 <outlet property="currentArtist" destination="2319" id="2367"/>
                 <outlet property="currentSong" destination="2311" id="2366"/>
+                <outlet property="drawerToggle" destination="1328" id="2234"/>
                 <outlet property="errorButton" destination="1807" id="1809"/>
                 <outlet property="errorLabel" destination="1263" id="1266"/>
                 <outlet property="errorView" destination="1251" id="1265"/>
@@ -884,11 +963,16 @@ Gw
                 <outlet property="art" destination="2436" id="2439"/>
                 <outlet property="artLoading" destination="1249" id="1250"/>
                 <outlet property="artistLabel" destination="1173" id="1243"/>
+                <outlet property="dislike" destination="819" id="2271"/>
+                <outlet property="like" destination="818" id="847"/>
+                <outlet property="nextSong" destination="777" id="GyL-Fk-D4G"/>
                 <outlet property="playbackProgress" destination="7eu-hy-jM9" id="cdd-rs-hGP"/>
                 <outlet property="playbackView" destination="1155" id="1238"/>
+                <outlet property="playpause" destination="776" id="845"/>
                 <outlet property="progressLabel" destination="1156" id="1245"/>
                 <outlet property="songLabel" destination="1172" id="1244"/>
                 <outlet property="songLoadingProgress" destination="1160" id="1246"/>
+                <outlet property="tiredOfSong" destination="820" id="nFf-SX-qEV"/>
                 <outlet property="toolbar" destination="768" id="844"/>
                 <outlet property="volume" destination="1158" id="1247"/>
             </connections>
@@ -1916,7 +2000,7 @@ DQ
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                         <tableColumns>
-                                                            <tableColumn editable="NO" width="186" minWidth="16" maxWidth="1000" id="1683">
+                                                            <tableColumn editable="NO" width="156" minWidth="16" maxWidth="1000" id="1683">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -1961,7 +2045,7 @@ DQ
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                         <tableColumns>
-                                                            <tableColumn editable="NO" width="186" minWidth="16" maxWidth="1000" id="1692">
+                                                            <tableColumn editable="NO" width="156" minWidth="16" maxWidth="1000" id="1692">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -2056,7 +2140,7 @@ DQ
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                         <tableColumns>
-                                                            <tableColumn identifier="name" editable="NO" width="186" minWidth="10" maxWidth="3.4028234663852886e+38" id="1769">
+                                                            <tableColumn identifier="name" editable="NO" width="157" minWidth="10" maxWidth="3.4028234663852886e+38" id="1769">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Artist - Song">
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -2104,7 +2188,7 @@ DQ
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                         <tableColumns>
-                                                            <tableColumn identifier="name" editable="NO" width="186" minWidth="40" maxWidth="1000" id="1713">
+                                                            <tableColumn identifier="name" editable="NO" width="157" minWidth="40" maxWidth="1000" id="1713">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Artist - Song">
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -2288,6 +2372,7 @@ DQ
                     </connections>
                 </menuItem>
             </items>
+            <point key="canvasLocation" x="414" y="151"/>
         </menu>
         <numberFormatter formatterBehavior="custom10_4" localizesFormat="NO" numberStyle="decimal" allowsFloats="NO" usesGroupingSeparator="NO" roundingMode="floor" minimumIntegerDigits="1" maximumIntegerDigits="5" id="EFh-JY-3EI" userLabel="Port Formatter">
             <real key="minimum" value="1"/>
@@ -2299,11 +2384,15 @@ DQ
         <image name="NSDescendingSortIndicator" width="9" height="9"/>
         <image name="NSFollowLinkFreestandingTemplate" width="19" height="19"/>
         <image name="NSFontPanel" width="32" height="32"/>
+        <image name="NSNetwork" width="32" height="32"/>
+        <image name="NSPreferencesGeneral" width="32" height="32"/>
         <image name="NSRefreshTemplate" width="17" height="20"/>
         <image name="NSRemoveTemplate" width="18" height="4"/>
         <image name="NSUser" width="32" height="32"/>
         <image name="cd" width="512" height="512"/>
         <image name="error_icon" width="128" height="128"/>
+        <image name="fast_forward" width="128" height="128"/>
+        <image name="history" width="450" height="450"/>
         <image name="missing-album" width="221" height="226"/>
         <image name="music-note" width="260" height="352"/>
         <image name="play" width="128" height="128"/>
@@ -2311,5 +2400,6 @@ DQ
         <image name="thumbup" width="49.439998626708984" height="58.080001831054688"/>
         <image name="volume_down" width="128" height="128"/>
         <image name="volume_up" width="128" height="128"/>
+        <image name="zzs" width="80" height="58"/>
     </resources>
 </document>

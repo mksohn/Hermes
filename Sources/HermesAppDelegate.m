@@ -386,10 +386,6 @@
 
 #pragma mark - Drawer management
 
-- (void) setDrawerToggleToolbarItem:(NSToolbarItem *) toolbarItem {
-  drawerToggle = toolbarItem;
-}
-
 - (void) historyShow {
   [history showDrawer];
   [drawerToggle setImage:[NSImage imageNamed:@"radio"]];
@@ -909,4 +905,3 @@
 }
 
 @end
-
