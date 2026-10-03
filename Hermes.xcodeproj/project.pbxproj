@@ -774,7 +774,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 25092604;
+				CURRENT_PROJECT_VERSION = 251003.01;
 				DEVELOPMENT_TEAM = 879HHN8F33;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -791,7 +791,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.3.3;
+				MARKETING_VERSION = 1.3.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alexcrichton.$(PRODUCT_NAME:rfc1034identifier)";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = com.alexcrichton.Hermes;
 				PRODUCT_NAME = Hermes;
@@ -814,7 +814,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 25092604;
+				CURRENT_PROJECT_VERSION = 251003.01;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 879HHN8F33;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -832,7 +832,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.3.3;
+				MARKETING_VERSION = 1.3.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alexcrichton.$(PRODUCT_NAME:rfc1034identifier)";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = com.alexcrichton.Hermes;
 				PRODUCT_NAME = Hermes;

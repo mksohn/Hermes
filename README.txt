@@ -1,3 +1,9 @@
+< v1.3.4 >
+o Improvements & Updates
+
+o Fixes
+ - issue where icons in toolbar show rounded border when selected (only Like needs border) (beta1)
+
 < v1.3.3 >
 o Improvements & Updates
  - Rebuild

@@ -323,17 +323,17 @@ MgA3AEkATABRAFMAXQBjAGwAcwB4AIAAlQCXAJkAmwCdAKcArACxALwAvwDBAMMAxQDKANUA3gDmAOkA
             </view>
             <toolbar key="toolbar" implicitIdentifier="523691DA-3184-4F47-A885-9465F8ED1820" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="iconOnly" sizeMode="regular" id="768">
                 <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="93E09D6C-9E59-4A3C-A062-D1300904AE9D" label="Play" paletteLabel="Play/Pause" toolTip="Play/pause the current song" tag="-1" image="play" sizingBehavior="auto" selectable="YES" id="776">
+                    <toolbarItem implicitItemIdentifier="93E09D6C-9E59-4A3C-A062-D1300904AE9D" label="Play" paletteLabel="Play/Pause" toolTip="Play/pause the current song" tag="-1" image="play" sizingBehavior="auto" id="776">
                         <connections>
                             <action selector="playpause:" target="835" id="854"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="C1F73AAE-CA9B-4AE4-84F0-6FD469CA5403" label="Next Song" paletteLabel="Next Song" toolTip="Skip current song" tag="-1" image="fast_forward" sizingBehavior="auto" selectable="YES" id="777">
+                    <toolbarItem implicitItemIdentifier="C1F73AAE-CA9B-4AE4-84F0-6FD469CA5403" label="Next Song" paletteLabel="Next Song" toolTip="Skip current song" tag="-1" image="fast_forward" sizingBehavior="auto" id="777">
                         <connections>
                             <action selector="next:" target="835" id="853"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="63378708-9425-4BEA-BDC4-0A119EA2829F" label="History" paletteLabel="History/Stations" toolTip="Show playback history" tag="-1" image="history" sizingBehavior="auto" selectable="YES" id="1328">
+                    <toolbarItem implicitItemIdentifier="63378708-9425-4BEA-BDC4-0A119EA2829F" label="History" paletteLabel="History/Stations" toolTip="Show playback history" tag="-1" image="history" sizingBehavior="auto" id="1328">
                         <connections>
                             <action selector="toggleDrawerContent:" target="494" id="2226"/>
                         </connections>
@@ -343,12 +343,12 @@ MgA3AEkATABRAFMAXQBjAGwAcwB4AIAAlQCXAJkAmwCdAKcArACxALwAvwDBAMMAxQDKANUA3gDmAOkA
                             <action selector="like:" target="835" id="852"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="2C8D8643-12E0-4455-B548-CE63FB4051DD" label="Dislike" paletteLabel="Dislike" toolTip="Dislike current song" tag="-1" image="thumbdown" sizingBehavior="auto" selectable="YES" id="819">
+                    <toolbarItem implicitItemIdentifier="2C8D8643-12E0-4455-B548-CE63FB4051DD" label="Dislike" paletteLabel="Dislike" toolTip="Dislike current song" tag="-1" image="thumbdown" sizingBehavior="auto" id="819">
                         <connections>
                             <action selector="dislike:" target="835" id="851"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="ACC84F8C-7985-4757-9D76-09A92CE90D5D" label="Tired" paletteLabel="Tired" toolTip="Don't play current song for a month" tag="-1" image="zzs" sizingBehavior="auto" selectable="YES" id="820">
+                    <toolbarItem implicitItemIdentifier="ACC84F8C-7985-4757-9D76-09A92CE90D5D" label="Tired" paletteLabel="Tired" toolTip="Don't play current song for a month" tag="-1" image="zzs" sizingBehavior="auto" id="820">
                         <connections>
                             <action selector="tired:" target="835" id="850"/>
                         </connections>
