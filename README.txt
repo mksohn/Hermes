@@ -1,6 +1,6 @@
 < v1.3.4 >
 o Improvements & Updates
-
+ - add "hide drawer" button in the Station Drawer and History Drawer (beta2)
 o Fixes
  - issue where icons in toolbar show rounded border when selected (only Like needs border) (beta1)
 
