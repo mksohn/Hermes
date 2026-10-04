@@ -869,12 +869,12 @@ Gw
             <point key="canvasLocation" x="244" y="255.5"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="979"/>
-        <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" appearanceType="aqua" frameAutosaveName="Hermes Preferences" animationBehavior="default" id="1112" userLabel="Preferences Window">
+        <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" appearanceType="aqua" frameAutosaveName="Hermes Preferences" animationBehavior="default" toolbarStyle="expanded" id="1112" userLabel="Preferences Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="362" height="451"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1050"/>
-            <view key="contentView" id="1113">
-                <rect key="frame" x="0.0" y="0.0" width="362" height="451"/>
+            <view key="contentView" misplaced="YES" id="1113">
+                <rect key="frame" x="0.0" y="0.0" width="362" height="444"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             </view>
             <toolbar key="toolbar" implicitIdentifier="15389171-D844-4B76-858A-C99C8D9DDD31" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="iconAndLabel" sizeMode="regular" id="1535">
@@ -1219,6 +1219,10 @@ DQ
                         <outlet property="hoverView" destination="1168" id="BZz-A6-PAn"/>
                     </connections>
                 </textField>
+                <progressIndicator hidden="YES" wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="1160">
+                    <rect key="frame" x="4" y="276" width="16" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                </progressIndicator>
                 <button hidden="YES" toolTip="View song on Pandora" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1171">
                     <rect key="frame" x="207" y="274" width="13" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
@@ -1264,10 +1268,6 @@ DQ
                     </shadow>
                     <sliderCell key="cell" controlSize="mini" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="9lo-wA-JHN" customClass="MusicProgressSliderCell"/>
                 </slider>
-                <progressIndicator hidden="YES" wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="1160">
-                    <rect key="frame" x="21" y="242" width="16" height="16"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                </progressIndicator>
             </subviews>
             <point key="canvasLocation" x="375" y="-310"/>
         </view>

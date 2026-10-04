@@ -4,6 +4,7 @@ o Improvements & Updates
  - adjust position of the "Like" progress indicator, hide a menu of "check for update" (beta3)
 o Fixes
  - issue where icons in toolbar show rounded border when selected (only Like needs border) (beta1)
+ - issue where Preference toolbar items are invisible (beta4)
 
 < v1.3.3 >
 o Improvements & Updates
@@ -12,4 +13,4 @@ o Improvements & Updates
   . update info strings (beta2)
   . restore ToolbarItem into xib (beta3)
 o Fixes
- - issue where toolbar items are invisible (beta4)
+ - issue where Main toolbar items are invisible (beta4)
