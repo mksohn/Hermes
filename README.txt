@@ -5,6 +5,7 @@ o Improvements & Updates
 o Fixes
  - issue where icons in toolbar show rounded border when selected (only Like needs border) (beta1)
  - issue where Preference toolbar items are invisible (beta4)
+ - future issue where main-thread violation when Preference > General > Hide dock icon and menu (beta5)
 
 < v1.3.3 >
 o Improvements & Updates

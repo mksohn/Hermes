@@ -518,8 +518,10 @@ static NSImage *HermesDrawerToolbarImageNamed(NSString *name) {
     [NSApp hide:nil];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
       TransformProcessType(&psn, kProcessTransformToUIElementApplication);
-      [NSApp activateIgnoringOtherApps:YES];
-      [[NSApp mainWindow] makeKeyAndOrderFront:nil]; // restores mouse cursor
+      dispatch_async(dispatch_get_main_queue(), ^{
+        [NSApp activateIgnoringOtherApps:YES];
+        [[NSApp mainWindow] makeKeyAndOrderFront:nil]; // restores mouse cursor
+      });
     });
   }
 
@@ -912,3 +914,4 @@ static NSImage *HermesDrawerToolbarImageNamed(NSString *name) {
 }
 
 @end
+
